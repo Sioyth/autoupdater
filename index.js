@@ -3,6 +3,7 @@ require('dotenv').config()
 const fs = require('fs-extra')
 const hostedGitInfo = require("hosted-git-info");
 const fetch = require('node-fetch');
+const download = require('download-git-repo');
 
 async function UpdateCheck()
 {
@@ -11,11 +12,10 @@ async function UpdateCheck()
     // Update function
     var gitVersion = await GetGitVersion();
     var path = "./versions/" + gitVersion;
-    if(fs.existsSync(path)) return;
+    //if(fs.existsSync(path)) return;
 
-    fs.mkdir(path);
-
-
+    //fs.mkdir(path);
+     var url = download(process.env.REPO, path);
 }
 
 async function CheckVersions()
@@ -48,7 +48,7 @@ function GetCurrentVersion()
         version = CompareVersions(version, file.name);
     })
 
-    return console.log(version);
+    return version;
 }
 
 //
